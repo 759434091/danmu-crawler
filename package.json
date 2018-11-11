@@ -1,0 +1,11 @@
+{
+  "name": "huya-danmu",
+  "version": "1.0.0",
+  "dependencies": {
+    "@tars/stream": "^2.0.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-register": "^6.26.0",
+    "base64-arraybuffer": "^0.1.5",
+    "websocket": "^1.0.28"
+  }
+}
