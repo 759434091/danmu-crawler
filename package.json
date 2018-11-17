@@ -9,6 +9,8 @@
     "babel-register": "^6.26.0",
     "base64-arraybuffer": "^0.1.5",
     "cheerio": "^1.0.0-rc.2",
-    "websocket": "^1.0.28"
+    "sequelize": "^4.41.2",
+    "websocket": "^1.0.28",
+    "mysql2": "latest"
   }
 }
