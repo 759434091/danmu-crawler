@@ -8,6 +8,7 @@ const dbPros = {
     password: '13318318260',
     port: 3306
 };
+
 const sequelize = new Sequelize(dbPros.database, dbPros.username, dbPros.password, {
     host: dbPros.host,
     port: dbPros.port,
@@ -17,8 +18,17 @@ const sequelize = new Sequelize(dbPros.database, dbPros.username, dbPros.passwor
         min: 0,
         acquire: 30000,
         idle: 10000
-    }
+    },
+    dialectOptions: {
+        charset: "utf8mb4",
+    },
+    define: {
+        charset: 'utf8mb4'
+    },
+    logging: false
 });
+
+/*sequelize.sync({force: true})*/
 
 const DanMu = sequelize.define('DanMu', {
     lTid: Sequelize.BIGINT,
@@ -38,12 +48,16 @@ const DanMu = sequelize.define('DanMu', {
 }, {
     tableName: 'dan_mu',
     charset: 'utf8mb4',
-    collate: 'utf8mb4_general_ci',
+    collate: 'utf8mb4_unicode_ci',
     freezeTableName: true,
     timestamps: false
 });
 
+sequelize.query('set names utf8mb4;')
+
 module.exports = (messageNotice) => {
+    if (messageNotice == null || messageNotice.sContent == null || '' === messageNotice.sContent)
+        return
     DanMu
         .create({
             lTid: messageNotice.lTid,
@@ -61,5 +75,6 @@ module.exports = (messageNotice) => {
             usrSAvatarUrl: messageNotice.tUserInfo.sAvatarUrl,
             usrNobleLevel: messageNotice.tUserInfo.iNobleLevel
         })
-        .then((danMu, created) => console.log(`successfully insert ${danMu.sContent} at ${created}`))
+        .then(danMu => console.log(`successfully insert ${danMu.sContent} ${danMu.usrSNickName}`))
+        .catch(err => console.error(`error insert ${messageNotice.sContent} ${messageNotice.tUserInfo.sNickName} : ${err.message}`))
 }

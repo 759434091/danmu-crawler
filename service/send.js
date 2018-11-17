@@ -6,7 +6,7 @@ import decode from "./decode"
 // 地址数组
 let URLS = ["b6831c13-ws.va.huya.com", "b6831c14-ws.va.huya.com", "3d809126-ws.va.huya.com", "3d809124-ws.va.huya.com"];
 
-export default async function start(presenterUid, handleMsg) {
+export default async function start(presenterUid, handleMsg, cliCb) {
     // sendRegisterGroup
     const registerBuffer = (() => {
         const chat = "chat:" + presenterUid;
@@ -40,9 +40,11 @@ export default async function start(presenterUid, handleMsg) {
                 client.close();
                 return;
             }
-            hadOne = true;
 
+            hadOne = true;
+            cliCb(client);
             console.log('WebSocket Client Connected');
+
             client._connection.extensions.push("permessage-deflate")
             client.send(registerBuffer)
         };
