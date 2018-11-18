@@ -1,7 +1,7 @@
 require('mysql2')
 const Sequelize = require('sequelize')
 
-const dbPros = require('dbPros');
+const dbPros = require('./dbPros');
 
 const sequelize = new Sequelize(dbPros.database, dbPros.username, dbPros.password, {
     host: dbPros.host,

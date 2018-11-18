@@ -1,12 +1,12 @@
-import Huya from "../pojo/Huya"
-import Taf from "../pojo/Taf"
-import {w3cwebsocket as WebSocketClient} from "websocket";
-import decode from "./decode"
+const Huya = require("../pojo/Huya")
+const Taf = require("../pojo/Taf")
+const WebSocketClient = require("websocket").w3cwebsocket
+const decode = require("./decode")
 
 // 地址数组
 let URLS = ["b6831c13-ws.va.huya.com", "b6831c14-ws.va.huya.com", "3d809126-ws.va.huya.com", "3d809124-ws.va.huya.com"];
 
-export default async function start(presenterUid, handleMsg, cliCb) {
+module.exports = async function start(presenterUid, handleMsg, cliCb) {
     // sendRegisterGroup
     const registerBuffer = (() => {
         const chat = "chat:" + presenterUid;

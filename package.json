@@ -1,5 +1,5 @@
 {
-  "name": "huya-danmu",
+  "name": "danmu-crawler",
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {

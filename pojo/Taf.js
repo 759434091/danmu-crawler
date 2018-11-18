@@ -1,7 +1,5 @@
 const Taf = {};
 
-export default Taf
-
 Taf.INT8 = function () {
     this._clone = function () {
         return 0
@@ -1626,3 +1624,5 @@ Taf.Util.ajax = function (t, e, i, r) {
     n.open("post", t)
     n.send(e)
 }
+
+module.exports = Taf

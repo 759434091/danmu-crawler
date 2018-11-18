@@ -1,7 +1,7 @@
-import axios from 'axios'
-import cheerio from 'cheerio'
+const axios = require('axios')
+const cheerio = require('cheerio')
 
-export default async function getRoomInfo(url) {
+module.exports = async function getRoomInfo(url) {
     const res = await axios.get(url)
         .catch(err => {
             throw new Error(err.message)

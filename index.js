@@ -1,8 +1,8 @@
 require("babel-plugin-transform-es2015-modules-commonjs")
 require("babel-register")
 
-const start = require("./service/send").default
-const fetchDanMu = require("./service/fetchDanMu").default;
+const start = require("./service/send")
+const fetchDanMu = require("./service/fetchDanMu");
 
 class DanMuFetch {
     constructor(url, handleMsg) {

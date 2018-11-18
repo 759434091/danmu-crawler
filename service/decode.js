@@ -1,7 +1,7 @@
-import Taf from "../pojo/Taf"
-import Huya from "../pojo/Huya"
+const Taf = require("../pojo/Taf")
+const Huya = require("../pojo/Huya")
 
-export default (handleMsg) => {
+module.exports = (handleMsg) => {
     return (t) => {
         const tarsInputStream = new Taf.JceInputStream(t.data);
         const webSocketCommand = new Huya.WebSocketCommand();
