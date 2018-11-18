@@ -1,7 +1,7 @@
 const Taf = require("../pojo/Taf")
 const Huya = require("../pojo/Huya")
 
-module.exports = (handleMsg) => {
+module.exports = (handleMsg, roomUrl, roomId) => {
     return (t) => {
         const tarsInputStream = new Taf.JceInputStream(t.data);
         const webSocketCommand = new Huya.WebSocketCommand();
@@ -15,7 +15,7 @@ module.exports = (handleMsg) => {
 
                 const sMsg = new Taf.JceInputStream(wsPushMessage.sMsg.buffer);
                 if (wsPushMessage.iUri !== 1400)
-                    console.debug("not a message");
+                    return;
 
                 const messageNotice = new Huya.MessageNotice();
                 try {
@@ -23,7 +23,7 @@ module.exports = (handleMsg) => {
                 } catch (e) {
                     console.error(e.message)
                 }
-                handleMsg(messageNotice)
+                handleMsg(createNorDanMu(messageNotice, roomUrl, roomId))
                 break;
             }
             case Huya.EWebSocketCommandType.EWSCmdS2C_MsgPushReq_V2: {
@@ -34,7 +34,7 @@ module.exports = (handleMsg) => {
                     const wsMsgItem = wsPushMessage.vMsgItem.value[i];
 
                     if (1400 !== wsMsgItem.iUri)
-                        console.debug("not a message");
+                        return;
 
                     const messageNotice = new Huya.MessageNotice();
                     const sMsg = new Taf.JceInputStream(wsMsgItem.sMsg);
@@ -43,12 +43,26 @@ module.exports = (handleMsg) => {
                     } catch (e) {
                         console.error(e.message)
                     }
-                    handleMsg(messageNotice)
+                    handleMsg(createNorDanMu(messageNotice, roomUrl, roomId))
                 }
                 break;
             }
             default:
-                console.debug("%c<<<<<<< Not matched CmdType: " + webSocketCommand.iCmdType)
+                break;
         }
+    }
+}
+
+function createNorDanMu(messageNotice, url, roomId) {
+    if (messageNotice == null || messageNotice.sContent == null || '' === messageNotice.sContent)
+        return null
+
+    return {
+        liveType: 'huya',
+        roomUrl: url,
+        roomId: roomId,
+        danMu: messageNotice.sContent,
+        usrUid: messageNotice.tUserInfo.lUid,
+        usrNickName: messageNotice.tUserInfo.sNickName
     }
 }

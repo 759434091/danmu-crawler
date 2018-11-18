@@ -1,8 +1,5 @@
-require("babel-plugin-transform-es2015-modules-commonjs")
-require("babel-register")
-
-const start = require("./service/send")
-const fetchDanMu = require("./service/fetchDanMu");
+const DouYuDanMuFetch = require('./douyu')
+const HuYaDanMuFetch = require('./huya')
 
 class DanMuFetch {
     constructor(url, handleMsg) {
@@ -12,16 +9,26 @@ class DanMuFetch {
     }
 
     async start() {
-        const g = await fetchDanMu(this.url)
-            .catch(err => console.error(err))
-
-        start(g.presenterUid, this.handleMsg, cli => this.process = cli)
+        if (this.url.includes('douyu')) {
+            const group = this.url.match(/^(http:\/\/|https:\/\/)?(www.)?(douyu.com\/)(\w+)$/)
+            if (!group) {
+                throw new Error('Invalid DouYu URL')
+            }
+            const roomId = group[4];
+            this.process = new DouYuDanMuFetch(this.url, roomId, this.handleMsg)
+            this.process.start()
+        } else if (this.url.includes('huya')) {
+            this.process = new HuYaDanMuFetch(this.url, this.handleMsg)
+            this.process.start()
+        } else {
+            throw new Error('Unknown URL')
+        }
     }
 
     async stop() {
-        if (this.process == null) throw new Error("No processing client");
-
-        await this.process.close();
+        if (null == this.process)
+            throw new Error("No process exist")
+        this.process.stop()
     }
 
 }

@@ -3,14 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
-    "@tars/stream": "^2.0.1",
     "axios": "^0.18.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
-    "babel-register": "^6.26.0",
-    "base64-arraybuffer": "^0.1.5",
     "cheerio": "^1.0.0-rc.2",
+    "mysql2": "latest",
     "sequelize": "^4.41.2",
-    "websocket": "^1.0.28",
-    "mysql2": "latest"
+    "websocket": "^1.0.28"
   }
 }

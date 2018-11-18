@@ -36,6 +36,7 @@ module.exports = async function getRoomInfo(url) {
             jsonStr = group[1];
             obj = JSON.parse(jsonStr)
             result.presenterUid = obj.lp
+            result.profileRoom = obj.profileRoom
 
             return result;
         }

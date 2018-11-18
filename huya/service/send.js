@@ -6,7 +6,7 @@ const decode = require("./decode")
 // 地址数组
 let URLS = ["b6831c13-ws.va.huya.com", "b6831c14-ws.va.huya.com", "3d809126-ws.va.huya.com", "3d809124-ws.va.huya.com"];
 
-module.exports = async function start(presenterUid, handleMsg, cliCb) {
+module.exports = async function start(presenterUid, handleMsg, cliCb, roomUrl, roomId) {
     // sendRegisterGroup
     const registerBuffer = (() => {
         const chat = "chat:" + presenterUid;
@@ -51,6 +51,6 @@ module.exports = async function start(presenterUid, handleMsg, cliCb) {
 
         client.onclose = a => console.log('Connection Closed: ' + a.reason);
 
-        client.onmessage = decode(handleMsg);
+        client.onmessage = decode(handleMsg, roomUrl, roomId);
     }
 }

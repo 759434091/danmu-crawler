@@ -890,7 +890,7 @@ Taf.JceInputStream.prototype.readStruct = function (t, e, i) {
     }
     var r = this.readFrom()
     if (r.type != Taf.DataHelp.EN_STRUCTBEGIN) {
-        throw Error("read struct type mismatch, tag: " + t + ", get type:" + r.type)
+        return
     }
     i.readFrom(this)
     this.skipToStructEnd()

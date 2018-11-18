@@ -25,20 +25,12 @@ const sequelize = new Sequelize(dbPros.database, dbPros.username, dbPros.passwor
 /*sequelize.sync({force: true})*/
 
 const DanMu = sequelize.define('DanMu', {
-    lTid: Sequelize.BIGINT,
-    lSid: Sequelize.BIGINT,
-    lPid: Sequelize.BIGINT,
-    iTermType: Sequelize.INTEGER,
-    iType: Sequelize.INTEGER,
-    sContent: Sequelize.STRING,
-    sIconUrl: Sequelize.STRING,
-    iShowMode: Sequelize.INTEGER,
-    usrLUid: Sequelize.BIGINT,
-    usrImid: Sequelize.BIGINT,
-    usrSNickName: Sequelize.STRING,
-    usrIGender: Sequelize.INTEGER,
-    usrSAvatarUrl: Sequelize.STRING,
-    usrNobleLevel: Sequelize.INTEGER,
+    liveType: Sequelize.STRING,
+    roomUrl: Sequelize.STRING,
+    roomId: Sequelize.STRING,
+    danMu: Sequelize.STRING,
+    usrUid: Sequelize.BIGINT,
+    usrNickName: Sequelize.STRING,
 }, {
     tableName: 'dan_mu',
     charset: 'utf8mb4',
@@ -49,26 +41,18 @@ const DanMu = sequelize.define('DanMu', {
 
 sequelize.query('set names utf8mb4;')
 
-module.exports = (messageNotice) => {
-    if (messageNotice == null || messageNotice.sContent == null || '' === messageNotice.sContent)
+module.exports = (danMuInfo) => {
+    if (danMuInfo == null || danMuInfo.danMu == null || '' === danMuInfo.danMu)
         return
     DanMu
         .create({
-            lTid: messageNotice.lTid,
-            lSid: messageNotice.lSid,
-            lPid: messageNotice.lPid,
-            iTermType: messageNotice.iTermType,
-            iType: messageNotice.iType,
-            sContent: messageNotice.sContent,
-            sIconUrl: messageNotice.sIconUrl,
-            iShowMode: messageNotice.iShowMode,
-            usrLUid: messageNotice.tUserInfo.lUid,
-            usrImid: messageNotice.tUserInfo.lImid,
-            usrSNickName: messageNotice.tUserInfo.sNickName,
-            usrIGender: messageNotice.tUserInfo.iGender,
-            usrSAvatarUrl: messageNotice.tUserInfo.sAvatarUrl,
-            usrNobleLevel: messageNotice.tUserInfo.iNobleLevel
+            liveType: danMuInfo.liveType,
+            roomUrl: danMuInfo.roomUrl,
+            roomId: danMuInfo.roomId.toString(),
+            danMu: danMuInfo.danMu,
+            usrUid: danMuInfo.usrUid,
+            usrNickName: danMuInfo.usrNickName,
         })
-        .then(danMu => console.log(`successfully insert ${danMu.sContent} ${danMu.usrSNickName}`))
-        .catch(err => console.error(`error insert ${messageNotice.sContent} ${messageNotice.tUserInfo.sNickName} : ${err.message}`))
+        .then(res => console.log(`successfully insert ${res.danMu} ${res.usrNickName}`))
+        .catch(err => console.error(`error insert ${danMuInfo.danMu} ${danMuInfo.usrNickName} : ${err.message}`))
 }
