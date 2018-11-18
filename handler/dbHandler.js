@@ -1,13 +1,7 @@
 require('mysql2')
 const Sequelize = require('sequelize')
 
-const dbPros = {
-    host: '118.126.111.189',
-    database: 'dan_mu_sys',
-    username: 'root',
-    password: '13318318260',
-    port: 3306
-};
+const dbPros = require('dbPros');
 
 const sequelize = new Sequelize(dbPros.database, dbPros.username, dbPros.password, {
     host: dbPros.host,
