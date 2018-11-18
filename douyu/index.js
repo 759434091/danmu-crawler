@@ -3,6 +3,9 @@ const net = require("net");
 const addr = "119.97.145.173"
 const port = 8601
 
+/**
+ * 斗鱼抓取器
+ */
 module.exports = class DanMuFetch {
     constructor(roomUrl, roomId, handleMsg) {
         this.roomUrl = roomUrl

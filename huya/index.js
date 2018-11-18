@@ -1,6 +1,9 @@
-const start = require("./service/send")
-const fetchDanMu = require("./service/fetchDanMu");
+const start = require("./service/start")
+const fetchDanMu = require("./service/fetchRoomInfo");
 
+/**
+ * 虎牙抓取器
+ */
 class DanMuFetch {
     constructor(url, handleMsg) {
         this.url = url
