@@ -13,3 +13,6 @@ const danMuFetch = new DanMuFetch(url, handleMsg) // handleMsg 在handler包中�
 danMuFetch.start()
 //danMuFetch.stop()
 ````
+
+使用实例参见
+./test/moduleTest.js
